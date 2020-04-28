@@ -4,6 +4,7 @@ import 'package:greatplaces/widgets/location_input.dart';
 import '../widgets/image_input.dart';
 import 'package:provider/provider.dart';
 import '../providers/great_places.dart';
+import './map_screen.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -27,6 +28,15 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     Provider.of<GreatPlaces>(context, listen: false)
         .addPlace(_textController.text, _pickedImage);
     Navigator.of(context).pop();
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+        builder: (ctx) => MapScreen(
+              isSelecting: true,
+            )));
+    if (selectedLocation == null) return;
   }
 
   @override
